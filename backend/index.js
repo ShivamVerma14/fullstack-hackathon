@@ -8,13 +8,87 @@ const PORT = process.env.PORT || 5000;
 
 mongoose
     .connect("mongodb://localhost:27017/hackathon")
-    .then(() => {
+    .then(async () => {
         console.log("Connected to MongoDB");
+
+        const venueSchema = new mongoose.Schema({
+            name: String,
+            location: String,
+            availability: [{ date: Date, available: Boolean }]
+        });
+
+        // Check if the venues collection already exists
+        const Venue = mongoose.models.Venue || mongoose.model('Venue', venueSchema);
+
+        // Function to create 4 venues with random names and locations
+        async function createVenues() {
+            const venuesData = [
+                { name: "Venue 1", location: "Location 1" },
+                { name: "Venue 2", location: "Location 2" },
+                { name: "Venue 3", location: "Location 3" },
+                { name: "Venue 4", location: "Location 4" }
+            ];
+            await Venue.insertMany(venuesData);
+        }
+
+        // Function to generate random dates for availability
+        function generateRandomDates(startDate, endDate, numDates) {
+            const dates = [];
+            while (dates.length < numDates) {
+                const timestamp = startDate.getTime() + Math.random() * (endDate.getTime() - startDate.getTime());
+                const date = new Date(timestamp);
+                const formattedDate = date.toISOString().split('T')[0]; // Extracting date part
+                const dateString = formattedDate.slice(0, 10); // Getting only YYYY-MM-DD part
+                if (!dates.includes(dateString)) {
+                    dates.push(dateString);
+                }
+            }
+            return dates;
+        }
+        
+        
+
+        // Function to create venue availability for the next 5 days
+        async function createVenueAvailability() {
+            const venues = await Venue.find();
+            const startDate = new Date();
+            const endDate = new Date(startDate.getTime() + (5 * 24 * 60 * 60 * 1000));
+        
+            for (const venue of venues) {
+                const randomAvailableDates = generateRandomDates(startDate, endDate, 3);
+                console.log(randomAvailableDates);
+                for (let date = new Date(startDate); date <= endDate; date.setDate(date.getDate() + 1)) {
+                    const dateString = date.toISOString().split('T')[0]; // Extracting date part
+                    const available = randomAvailableDates.includes(dateString);
+                    venue.availability.push({ date: dateString, available }); // Pushing only date without timestamp
+                }
+                await venue.save();
+            }
+        }
+        
+
+        // Insert initial venue data
+        async function insertVenueData() {
+            await createVenues();
+            await createVenueAvailability();
+        }
+
+        // Check if venues collection exists before creating it
+        const collections = await mongoose.connection.db.listCollections().toArray();
+        const collectionNames = collections.map(col => col.name);
+        if (!collectionNames.includes('venues')) {
+            await insertVenueData();
+        }
+
+
+
+
     })
     .catch((error) => {
         console.error("Error connecting to MongoDB:", error);
         process.exit(1);
     });
+
 
 const InstituteSchema = new mongoose.Schema({
     name: { type: String, required: true },
@@ -152,12 +226,38 @@ app.post("/login/student", async (req, res) => {
 app.get("/fetchStudent/:id", async (req, res) => {
     try {
         const id = req.params.id;
-        const students = await Student.findById(id);
-        console.log(students);
-        res.status(200).json({ students });
+        const data = await Student.findById(id);
+        console.log(data);
+        res.status(200).json(data);
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
+});
+
+app.get('/fetchInstituteProfile/:id', async (req, res) => {
+    try {
+        const id = req.params.id;
+        const data = await Institute.findById(id);
+        console.log(data);
+        res.status(200).json(data);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+});
+
+app.get("/fetchTests/:student_id", async (req, res) => {
+    try {
+        const { student_id } = req.params;
+        const tests = await Test.find({ student_id }); // Fetch tests by student_id
+        console.log(tests);
+        res.status(200).json(tests);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+});
+
+app.get("/fetchVenues/:date", async (req, res) => {
+
 });
 
 app.post("/test/add", async (req, res) => {
@@ -194,6 +294,8 @@ app.post("/test/add", async (req, res) => {
         res.status(400).json({ error: error.message });
     }
 });
+
+
 
 app.post("/test/edit", async (req, res) => {
     try {

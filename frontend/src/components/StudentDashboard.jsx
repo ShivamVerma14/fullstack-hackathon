@@ -8,19 +8,38 @@ import axios from "axios";
 
 const StudentDashboard = () => {
     const [studentProfile, setStudentProfile] = useState(null);
+    // const [tests, setTests] = useState([]);
 
-    const getData = async () => {
-        const { id } = useParams();
-        const response = await axios.get(
-            `http://localhost:5000/fetchStudent/${id}`
-        );
-        setStudentProfile(response.data); // Assuming response.data contains student profile data
-    };
+    const { id } = useParams(); // Get id from useParams()
 
     useEffect(() => {
-        getData();
-    }, []);
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(`http://localhost:5000/fetchStudent/${id}`);
+                console.log(response.data);
+                setStudentProfile(response.data);
+            } catch (error) {
+                console.error('Error fetching student profile:', error);
+            }
+        };
 
+        fetchData();
+    }, [id]);
+
+    // useEffect(() => {
+    //     const fetchTests = async () => {
+    //       try {
+    //         const response = await axios.get(`http://localhost:5000/fetchTests/${id}`);
+    //         console.log(response.data);
+    //         setTests(response.data);
+    //       } catch (error) {
+    //         console.error('Error fetching tests:', error);
+    //       }
+    //     };
+    
+    //     fetchTests();
+    //   }, [id]);
+    
     // // Sample student profile data
     // const studentProfile = {
     //     name: "John Doe",
@@ -74,10 +93,16 @@ const StudentDashboard = () => {
             <div className="profile-card">
                 <h2>Student Details</h2>
                 <i className="ri-account-pin-circle-fill"></i>
-                <div>Name: {studentProfile.name}</div>
-                <div>Email: {studentProfile.email}</div>
-                <div>Age: {studentProfile.age}</div>
-                {/* Add more profile data as needed */}
+                {studentProfile ? (
+                    <>
+                        <div>Name: {studentProfile.name}</div>
+                        <div>Email: {studentProfile.email}</div>
+                        {/* <div>Age: {studentProfile.age}</div> */}
+                        {/* Add more profile data as needed */}
+                    </>
+                ) : (
+                    <div>Loading student profile...</div>
+                )}
             </div>
             <div className="tests-container">
                 <div className="test-box">
@@ -91,12 +116,11 @@ const StudentDashboard = () => {
                                 <div>
                                     {/* Render arrow icon for each test */}
                                     <i
-                                        className={`ri-arrow-right-s-line ${
-                                            selectedTest &&
+                                        className={`ri-arrow-right-s-line ${selectedTest &&
                                             selectedTest.id === test.id
-                                                ? "expanded"
-                                                : ""
-                                        }`}
+                                            ? "expanded"
+                                            : ""
+                                            }`}
                                     ></i>
                                 </div>
                             </div>

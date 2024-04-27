@@ -11,7 +11,7 @@ import InstituteRegister from "./components/InstituteRegister";
 import StudentRegister from "./components/StudentRegister";
 import StudentDashboard from "./components/StudentDashboard";
 import InstituteDashboard from "./components/InstituteDashboard";
-
+import CreateTest from './components/CreateTest'
 const App = () => {
     return (
         <Router>
@@ -40,6 +40,8 @@ const App = () => {
                     element={<InstituteDashboard />}
                 />
                 <Route path="/student-register" element={<StudentRegister />} />
+                <Route path='/test/add' element={<CreateTest />}></Route>
+
             </Routes>
         </Router>
     );
