@@ -1,0 +1,52 @@
+.hero-section {
+    position: relative;
+    color: #ffffff; /* White text color */
+    padding: 80px; /* Add padding to all sides */
+    display: flex;
+    height: 505px;
+    width: 1376px;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 0; /* Rounded corners */
+    overflow: hidden; /* Ensure rounded corners are applied properly */
+    background-image: url("https://images.unsplash.com/photo-1670836037219-ee4c9bf7460f?q=80&w=1953&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"); /* Set the image as the background */
+    background-size: cover; /* Cover the entire container with the background image */
+    background-position: center; /* Center the background image */
+}
+
+.hero-content {
+    flex: 0 0 50%;
+    max-width: 50%;
+    padding-left: 60%; /* Add padding to the left for spacing */
+}
+
+.hero-content h1 {
+    font-size: 42px;
+    margin-bottom: 20px;
+}
+
+.hero-content p {
+    font-size: 20px;
+    margin-bottom: 30px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: flex-start;
+    margin: 5vw 0;
+    gap: 2vw;
+}
+
+.hero-button {
+    text-decoration: none;
+    color: #ffffff;
+    background-color: #ff6900;
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-size: 18px;
+    transition: background-color 0.3s ease;
+}
+
+.hero-button:hover {
+    background-color: #000000;
+}

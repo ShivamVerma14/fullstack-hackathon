@@ -1,0 +1,79 @@
+/* StudentDashboard.css */
+
+.student-dashboard {
+    background: linear-gradient(to right, #202020, #292929, #333333);
+    padding: 20px;
+    color: #fff;
+}
+
+.profile-card {
+    background-color: #9b9999;
+    color: #848181;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(63, 63, 63, 0.3);
+    padding: 20px;
+    margin-bottom: 30px;
+}
+
+.profile-card h2 {
+    font-size: 24px;
+    margin-bottom: 15px;
+    color: #674b4b;
+}
+
+.profile-card div {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #555;
+}
+
+.tests-container {
+    display: flex;
+    justify-content: center;
+}
+
+.test-box {
+    width: 80%; /* Adjust the width as needed */
+    padding: 20px;
+}
+
+.test-card {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.test-card h2 {
+    font-size: 20px;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.test-card .test-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+.test-card .test-header div {
+    flex: 1;
+}
+
+.test-card .test-header i {
+    font-size: 24px;
+    transition: transform 0.3s ease;
+}
+
+/* Different styles for test cards */
+.test-card:nth-child(odd) {
+    background-color: #9ca3af;
+    color: #1f2937;
+}
+
+.test-card:nth-child(even) {
+    background-color: #d1d5db;
+    color: #1f2937;
+}

@@ -1,0 +1,50 @@
+.main-login-page {
+    background-color: #1a1a1a; /* Darker background color */
+    display: flex;
+    height: 100vh; /* Set height to fill the viewport */
+}
+
+.left-section {
+    width: 40%; /* 40% width for the left section */
+    padding: 20px; /* Add some padding */
+    color: white; /* Text color */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center content vertically */
+    align-items: center; /* Center content horizontally */
+}
+
+.left-section h2 {
+    margin-bottom: 20px; /* Add some space below the heading */
+}
+
+.left-section a {
+    display: block;
+    margin-bottom: 10px; /* Add some space between the links */
+    color: white; /* Link color */
+    background-color: #ff6900; /* Default background color */
+    padding: 10px 20px; /* Add padding */
+    border-radius: 5px; /* Add border radius */
+    text-align: center; /* Center text */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth color and background color transition */
+    text-decoration: none; /* Remove underline */
+    font-weight: bold; /* Make text bold */
+}
+
+.left-section a:hover {
+    background-color: black; /* Darker shade of orange */
+    color: #fff; /* Change text color on hover */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Add shadow on hover */
+}
+
+/* Right section with gradient covering 60% of the page */
+.main-login-page::after {
+    content: "";
+    background: linear-gradient(
+        to right,
+        #202020,
+        #292929,
+        #333333
+    ); /* Gradient colors */
+    width: 60%; /* 60% width for the right section */
+}

@@ -1,0 +1,45 @@
+.navbar {
+    background-color: #252525; /* Dark background color */
+    color: #ffffff; /* White text color */
+    padding: 10px 20px; /* Add padding */
+    display: flex; /* Make the navbar a flex container */
+    justify-content: space-between; /* Space between items */
+    align-items: center; /* Center items vertically */
+}
+
+.navbar-left {
+    display: flex; /* Make the left section a flex container */
+    align-items: center; /* Center items vertically */
+}
+
+.logo {
+    text-decoration: none; /* Remove underline from logo */
+    color: #ffffff; /* White text color */
+}
+
+.logo img {
+    width: 40px; /* Adjust logo size as needed */
+}
+
+.navbar-right {
+    display: flex; /* Make the right section a flex container */
+    align-items: center; /* Center items vertically */
+}
+
+.nav-button {
+    text-decoration: none;
+    color: #ffffff;
+    background-color: #ff6900;
+    padding: 10px 20px;
+    border-radius: 20px;
+    margin-right: 10px; /* Add some spacing between button and profile icon */
+}
+
+.profile-icon {
+    width: 40px; /* Adjust profile icon size as needed */
+    border-radius: 50%; /* Make the profile icon round */
+}
+
+.profile-icon i {
+    font-size: 2vw;
+}
