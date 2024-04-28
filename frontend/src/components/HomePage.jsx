@@ -9,10 +9,10 @@ const HomePage = () => {
             <nav className="navbar">
                 <ul>
                     <li>
-                        <Link to="/about">About Us</Link>
+                        <Link to="/about">About</Link>
                     </li>
                     <li>
-                        <Link to="/contact">Contact</Link>
+                        <Link to="/contact">Contact Us</Link>
                     </li>
                     <li>
                         <Link to="/main-login">Login</Link>

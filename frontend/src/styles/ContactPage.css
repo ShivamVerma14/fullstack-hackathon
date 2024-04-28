@@ -1,0 +1,54 @@
+.contact-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    color: white;
+}
+
+.contact-container h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #ff6900;
+}
+
+.contact-container p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.contact-details {
+    margin-bottom: 30px;
+}
+
+.contact-details div {
+    margin-bottom: 20px;
+}
+
+.contact-details h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.social-media h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.social-media ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.social-media ul li {
+    margin-bottom: 10px;
+}
+
+.social-media ul li a {
+    color: #ff6900;
+    text-decoration: none;
+}
+
+.social-media ul li a:hover {
+    text-decoration: underline;
+}

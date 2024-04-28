@@ -11,7 +11,10 @@ import InstituteRegister from "./components/InstituteRegister";
 import StudentRegister from "./components/StudentRegister";
 import StudentDashboard from "./components/StudentDashboard";
 import InstituteDashboard from "./components/InstituteDashboard";
-import CreateTest from './components/CreateTest'
+import CreateTest from "./components/CreateTest";
+import BookTestPage from "./components/BookTestPage";
+import Dropdown from "./components/Dropdown";
+
 const App = () => {
     return (
         <Router>
@@ -39,9 +42,9 @@ const App = () => {
                     path="/institute-dashboard/:id"
                     element={<InstituteDashboard />}
                 />
+                <Route path="/book-test" element={<BookTestPage />} />
                 <Route path="/student-register" element={<StudentRegister />} />
-                <Route path='/test/add' element={<CreateTest />}></Route>
-
+                <Route path="/test/add/:id" element={<CreateTest />}></Route>
             </Routes>
         </Router>
     );

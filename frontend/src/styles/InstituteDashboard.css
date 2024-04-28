@@ -1,107 +1,52 @@
-/* instituteDashboard.css */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
 
-/* Base styles for the institute dashboard */
 .institute-dashboard {
-  background: linear-gradient(to right, #202020, #292929, #333333);
-  color: #fff;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(to right, #202020, #292929, #333333);
+    color: #fff;
 }
 
-/* Styles for the institute profile card */
-.profile-card {
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(63, 63, 63, 0.3);
-  padding: 20px;
-  margin-bottom: 30px;
+.subscription {
 }
 
-.profile-card-container {
-  display: flex;
-  align-items: center;
-  justify-content: start;
-  gap: 2vw;
-}
-
-.about-user {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin-top: 2.5vw;
-}
-.profile-card h2 {
-  font-size: 2vw;
-  margin-bottom: 15px;
-}
-
-.profile-card i {
-  font-size: 5vw;
-  color: rgb(158, 157, 157);
-}
-.profile-card div {
-  font-size: 1.5rem;
-  margin-bottom: 10px;
-}
-
-h2 {
-  text-align: center;
-  font-size: 2vw;
-  margin-bottom: 15px;
-}
-
-/* Container for the list of tests */
-.tests-container {
-  width: 100%;
-  min-height: 10vw;
-  display: flex;
-  justify-content: center;
-}
-
-/* Unordered list styles */
-.test-list {
-  margin: 1vw;
-  width: 25%;
-  list-style-type: none;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center; /* Center items horizontally */
-}
-.test-item {
-  width: 100%;
-  background-color: #6fc35e; /* Background color */
-  border-radius: 10px; /* Rounded corners */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Box shadow for depth */
-  padding: 20px; /* Padding around each test item */
-  margin: 0 10px 20px; /* Margin around each test item */
-  color: #fff; /* Text color */
-}
-
-.test-item .test-header {
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  cursor: pointer;
-}
-.test-item .test-header div {
-  flex: 1;
-}
-
-.test-item .test-header i {
-  font-size: 24px; /* Icon size */
-  color: #fff; /* Color for arrow icon */
-  transition: transform 0.3s ease; /* Smooth transition for icon rotation */
+.actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
 }
 
 .create-test-link {
-  display: inline-block; /* Display as inline block */
-  padding: 10px 20px; /* Add padding */
-  margin-top: 20px; /* Add margin to separate from other elements */
-  background-color: #007bff; /* Button background color */
-  color: #fff; /* Button text color */
-  text-decoration: none; /* Remove default underline */
-  border-radius: 5px; /* Add border radius for rounded corners */
-  transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #ff6900;
+    color: #fff;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
 }
 
 .create-test-link:hover {
-  background-color: #0056b3; /* Change background color on hover */
+    background-color: #d25f00;
+}
+
+button {
+    margin-left: 200px;
+    margin-top: -80px;
+    background-color: #ff6900;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #d25f00;
 }

@@ -8,45 +8,24 @@ import axios from "axios";
 
 const StudentDashboard = () => {
     const [studentProfile, setStudentProfile] = useState(null);
-    // const [tests, setTests] = useState([]);
 
-    const { id } = useParams(); // Get id from useParams()
+    const { id } = useParams();
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/fetchStudent/${id}`);
+                const response = await axios.get(
+                    `http://localhost:5000/fetchStudent/${id}`
+                );
                 console.log(response.data);
                 setStudentProfile(response.data);
             } catch (error) {
-                console.error('Error fetching student profile:', error);
+                console.error("Error fetching student profile:", error);
             }
         };
 
         fetchData();
     }, [id]);
-
-    // useEffect(() => {
-    //     const fetchTests = async () => {
-    //       try {
-    //         const response = await axios.get(`http://localhost:5000/fetchTests/${id}`);
-    //         console.log(response.data);
-    //         setTests(response.data);
-    //       } catch (error) {
-    //         console.error('Error fetching tests:', error);
-    //       }
-    //     };
-    
-    //     fetchTests();
-    //   }, [id]);
-    
-    // // Sample student profile data
-    // const studentProfile = {
-    //     name: "John Doe",
-    //     email: "john@example.com",
-    //     age: 25,
-    //     // Add more profile data as needed
-    // };
 
     const tests = [
         {
@@ -69,19 +48,14 @@ const StudentDashboard = () => {
             ug_pg: "UG/PG",
             centers: ["Center 1", "Center 3"],
         },
-        // Add more test data as needed
     ];
 
-    // State to track the selected test details
     const [selectedTest, setSelectedTest] = useState(null);
 
-    // Function to handle test click
     const handleTestClick = (testId) => {
-        // If the clicked test is already expanded, collapse it
         if (selectedTest && selectedTest.id === testId) {
             setSelectedTest(null);
         } else {
-            // Otherwise, expand the clicked test
             const test = tests.find((test) => test.id === testId);
             setSelectedTest(test);
         }
@@ -114,17 +88,16 @@ const StudentDashboard = () => {
                             >
                                 <div>{test.name}</div>
                                 <div>
-                                    {/* Render arrow icon for each test */}
                                     <i
-                                        className={`ri-arrow-right-s-line ${selectedTest &&
+                                        className={`ri-arrow-right-s-line ${
+                                            selectedTest &&
                                             selectedTest.id === test.id
-                                            ? "expanded"
-                                            : ""
-                                            }`}
+                                                ? "expanded"
+                                                : ""
+                                        }`}
                                     ></i>
                                 </div>
                             </div>
-                            {/* Render test details if the test is expanded */}
                             {selectedTest && selectedTest.id === test.id && (
                                 <div className="test-details">
                                     <h3>Test Details</h3>

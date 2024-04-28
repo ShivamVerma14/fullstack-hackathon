@@ -2,6 +2,8 @@ import express from "express";
 import mongoose from "mongoose";
 import session from "express-session";
 import cors from "cors";
+import axios from "axios";
+import crypto from "crypto";
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -14,81 +16,82 @@ mongoose
         const venueSchema = new mongoose.Schema({
             name: String,
             location: String,
-            availability: [{ date: Date, available: Boolean }]
+            availability: [{ date: Date, available: Boolean }],
         });
 
-        // Check if the venues collection already exists
-        const Venue = mongoose.models.Venue || mongoose.model('Venue', venueSchema);
+        const Venue =
+            mongoose.models.Venue || mongoose.model("Venue", venueSchema);
 
-        // Function to create 4 venues with random names and locations
         async function createVenues() {
             const venuesData = [
                 { name: "Venue 1", location: "Location 1" },
                 { name: "Venue 2", location: "Location 2" },
                 { name: "Venue 3", location: "Location 3" },
-                { name: "Venue 4", location: "Location 4" }
+                { name: "Venue 4", location: "Location 4" },
             ];
             await Venue.insertMany(venuesData);
         }
 
-        // Function to generate random dates for availability
         function generateRandomDates(startDate, endDate, numDates) {
             const dates = [];
             while (dates.length < numDates) {
-                const timestamp = startDate.getTime() + Math.random() * (endDate.getTime() - startDate.getTime());
+                const timestamp =
+                    startDate.getTime() +
+                    Math.random() * (endDate.getTime() - startDate.getTime());
                 const date = new Date(timestamp);
-                const formattedDate = date.toISOString().split('T')[0]; // Extracting date part
-                const dateString = formattedDate.slice(0, 10); // Getting only YYYY-MM-DD part
+                const formattedDate = date.toISOString().split("T")[0];
+                const dateString = formattedDate.slice(0, 10);
                 if (!dates.includes(dateString)) {
                     dates.push(dateString);
                 }
             }
             return dates;
         }
-        
-        
 
-        // Function to create venue availability for the next 5 days
         async function createVenueAvailability() {
             const venues = await Venue.find();
             const startDate = new Date();
-            const endDate = new Date(startDate.getTime() + (5 * 24 * 60 * 60 * 1000));
-        
+            const endDate = new Date(
+                startDate.getTime() + 5 * 24 * 60 * 60 * 1000
+            );
+
             for (const venue of venues) {
-                const randomAvailableDates = generateRandomDates(startDate, endDate, 3);
+                const randomAvailableDates = generateRandomDates(
+                    startDate,
+                    endDate,
+                    3
+                );
                 console.log(randomAvailableDates);
-                for (let date = new Date(startDate); date <= endDate; date.setDate(date.getDate() + 1)) {
-                    const dateString = date.toISOString().split('T')[0]; // Extracting date part
+                for (
+                    let date = new Date(startDate);
+                    date <= endDate;
+                    date.setDate(date.getDate() + 1)
+                ) {
+                    const dateString = date.toISOString().split("T")[0];
                     const available = randomAvailableDates.includes(dateString);
-                    venue.availability.push({ date: dateString, available }); // Pushing only date without timestamp
+                    venue.availability.push({ date: dateString, available });
                 }
                 await venue.save();
             }
         }
-        
 
-        // Insert initial venue data
         async function insertVenueData() {
             await createVenues();
             await createVenueAvailability();
         }
 
-        // Check if venues collection exists before creating it
-        const collections = await mongoose.connection.db.listCollections().toArray();
-        const collectionNames = collections.map(col => col.name);
-        if (!collectionNames.includes('venues')) {
+        const collections = await mongoose.connection.db
+            .listCollections()
+            .toArray();
+        const collectionNames = collections.map((col) => col.name);
+        if (!collectionNames.includes("venues")) {
             await insertVenueData();
         }
-
-
-
-
     })
     .catch((error) => {
         console.error("Error connecting to MongoDB:", error);
         process.exit(1);
     });
-
 
 const InstituteSchema = new mongoose.Schema({
     name: { type: String, required: true },
@@ -109,7 +112,6 @@ const StudentSchema = new mongoose.Schema({
 const TestSchema = new mongoose.Schema({
     institute_id: { type: String, required: true },
     name: { type: String, required: true },
-    description: { type: String, required: true },
     date: { type: Date, required: true },
     eligibility: { type: Array, required: true },
     type: { type: String, required: true },
@@ -234,7 +236,7 @@ app.get("/fetchStudent/:id", async (req, res) => {
     }
 });
 
-app.get('/fetchInstituteProfile/:id', async (req, res) => {
+app.get("/fetchInstituteProfile/:id", async (req, res) => {
     try {
         const id = req.params.id;
         const data = await Institute.findById(id);
@@ -245,10 +247,10 @@ app.get('/fetchInstituteProfile/:id', async (req, res) => {
     }
 });
 
-app.get("/fetchTests/:student_id", async (req, res) => {
+app.get("/fetchTests/:id", async (req, res) => {
     try {
-        const { student_id } = req.params;
-        const tests = await Test.find({ student_id }); // Fetch tests by student_id
+        const { id } = req.params;
+        const tests = await Test.find({ institute_id: id });
         console.log(tests);
         res.status(200).json(tests);
     } catch (error) {
@@ -256,15 +258,13 @@ app.get("/fetchTests/:student_id", async (req, res) => {
     }
 });
 
-app.get("/fetchVenues/:date", async (req, res) => {
-
-});
+app.get("/fetchVenues/:date", async (req, res) => {});
 
 app.post("/test/add", async (req, res) => {
     try {
         const {
+            institute_id,
             name,
-            description,
             date,
             eligibility,
             type,
@@ -274,9 +274,8 @@ app.post("/test/add", async (req, res) => {
         } = req.body;
 
         const test = new Test({
-            institute_id: req.session.user._id,
+            institute_id,
             name,
-            description,
             date,
             eligibility,
             type,
@@ -294,8 +293,6 @@ app.post("/test/add", async (req, res) => {
         res.status(400).json({ error: error.message });
     }
 });
-
-
 
 app.post("/test/edit", async (req, res) => {
     try {
@@ -357,6 +354,70 @@ app.post("/book", async (req, res) => {
         });
     } catch (error) {
         res.status(400).json({ error: error.message });
+    }
+});
+
+function generateTransactionID() {
+    const timestamp2 = Date.now();
+    const randomNum2 = Math.floor(Math.random() * 1000000);
+    const merchantPrefix = "T";
+    const transactionID = `${merchantPrefix}${timestamp2}${randomNum2}`;
+    return transactionID;
+}
+
+app.post("/payment", async (req, res) => {
+    try {
+        const { amt, id } = req.body;
+        const data = {
+            merchantId: "PGTESTPAYUAT",
+            merchantTransactionId: generateTransactionID(),
+            merchantUserId: "MUED9EFW8E9F89EWF8C",
+            name: "name",
+            amount: amt * 100,
+            redirectUrl: `http://localhost:5173/institute-dashboard/${id}`,
+            redirectMode: "POST",
+            mobileNumber: 9999999999,
+            paymentInstrument: {
+                type: "PAY_PAGE",
+            },
+        };
+        const payload = JSON.stringify(data);
+        const payloadMain = Buffer.from(payload).toString("base64");
+        const key = "099eb0cd-02cf-4e2a-8aca-3e6c6aff0399";
+        const keyIndex = 1;
+        const string = payloadMain + "/pg/v1/pay" + key;
+        const sha256 = crypto.createHash("sha256").update(string).digest("hex");
+        const checksum = sha256 + "###" + keyIndex;
+
+        const URL = "https://api-preprod.phonepe.com/apis/pg-sandbox/pg/v1/pay";
+
+        const options = {
+            method: "POST",
+            url: URL,
+            headers: {
+                accept: "application/json",
+                "Content-Type": "application/json",
+                "X-VERIFY": checksum,
+            },
+            data: {
+                request: payloadMain,
+            },
+        };
+        axios
+            .request(options)
+            .then(function (response) {
+                console.log(response.data);
+                return res
+                    .status(200)
+                    .send(
+                        response.data.data.instrumentResponse.redirectInfo.url
+                    );
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    } catch (error) {
+        console.log(error);
     }
 });
 

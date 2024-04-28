@@ -1,0 +1,115 @@
+.filter-options {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    gap: 2vw;
+}
+
+.filter-option {
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    color: #fff;
+    border-radius: 25px;
+    background-color: #428a42;
+}
+
+.filter-option:hover .dropdown {
+    display: block;
+}
+
+.dropdown {
+    display: none;
+    position: absolute;
+    top: calc(100%);
+    left: 0;
+    background-color: #fff;
+    min-width: 200px;
+    border-radius: 10px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+}
+
+.dropdown-item {
+    padding: 12px 20px;
+    text-decoration: none;
+    display: block;
+    color: #333;
+    transition: background-color 0.3s ease;
+}
+
+.dropdown-item:hover {
+    background-color: #f1f1f1;
+}
+
+.test-section {
+    margin-top: 20px;
+}
+
+.test-item {
+    margin-bottom: 10px;
+}
+
+.book-button {
+    background-color: #4caf50;
+    border: none;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 25px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.book-button:hover {
+    background-color: #45a049;
+}
+
+.book-button {
+    background-color: #4caf50;
+    border: none;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 25px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.book-button:hover {
+    background-color: #45a049;
+}
+
+.tests-container {
+    width: 100%;
+    min-height: 10vw;
+    display: flex;
+    justify-content: center;
+}
+
+.test-card {
+    background-color: #6fc35e;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    margin: 0 10px 20px;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.test-card:hover {
+    background-color: #5ba74b;
+}
+
+.test-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.test-details-container {
+    margin-top: 20px;
+}
